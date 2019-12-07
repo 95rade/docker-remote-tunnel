@@ -20,7 +20,7 @@ resources:
 - name: slack-alert
   type: slack-notification
   source:
-    url: ((slack-notification-url))
+    url: ((slack-webhook))
 
 resource_types:
   - name: slack-notification
@@ -73,7 +73,7 @@ jobs:
     on_failure:
       put: slack-alert
       params:
-        channel: '#system_events'
+        channel: '#general'
         username: 'concourse'
         icon_emoji: ':concourse:'
         silent: true
@@ -83,7 +83,7 @@ jobs:
     on_success:
       put: slack-alert
       params:
-        channel: '#system_events'
+        channel: '#general'
         username: 'concourse'
         icon_emoji: ':concourse:'
         silent: true
@@ -114,7 +114,7 @@ jobs:
     on_failure:
       put: slack-alert
       params:
-        channel: '#system_events'
+        channel: '#general'
         username: 'concourse'
         icon_emoji: ':concourse:'
         silent: true
@@ -124,7 +124,7 @@ jobs:
     on_success:
       put: slack-alert
       params:
-        channel: '#system_events'
+        channel: '#general'
         username: 'concourse'
         icon_emoji: ':concourse:'
         silent: true
