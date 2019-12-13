@@ -1,6 +1,7 @@
 resources:
 - name: git-repo
   type: git
+  icon: github-circle
   source:
     #uri: git@github.com:ruanbekker/docker-remote-tunnel.git
     uri: https://github.com/ruanbekker/docker-remote-tunnel.git
@@ -9,8 +10,10 @@ resources:
 
 - name: docker-remote-tunnel-image
   type: docker-image
+  icon: docker
   source:
     repository: ruanbekker/docker-remote-tunnel
+    #repository: rade05/docker-remote-tunnel
     tag: test
     #username: ((docker_hub_user2))
     #password: ((docker_hub_password2))
@@ -19,6 +22,7 @@ resources:
 
 - name: slack-alert
   type: slack-notification
+  icon: slack
   source:
     url: ((slack-webhook))
 
@@ -41,6 +45,7 @@ jobs:
         type: docker-image
         source:
           repository: rbekker87/build-tools
+          #repository: rade95/build-tools
 
       outputs:
       - name: workspace
@@ -73,23 +78,28 @@ jobs:
     on_failure:
       put: slack-alert
       params:
-        channel: '#general'
-        username: 'concourse'
-        icon_emoji: ':concourse:'
+        channel: '#concourse'
+        #username: 'rade'
+        #icon_emoji: ':concourse:'
+        icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
         silent: true
         text: |
             *$BUILD_PIPELINE_NAME/$BUILD_JOB_NAME* ($BUILD_NAME) FAILED to build image
-            https://ci.domain.xyz/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+            https://ci.domain.xyz/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_JOB_NAME
+
+
     on_success:
       put: slack-alert
       params:
-        channel: '#general'
-        username: 'concourse'
-        icon_emoji: ':concourse:'
+        channel: '#concourse'
+        #username: 'rade'
+        #icon_emoji: ':concourse:'
+        icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
         silent: true
         text: |
             *$BUILD_PIPELINE_NAME/$BUILD_JOB_NAME* ($BUILD_NAME) SUCCESS - Image has been published
             https://ci.domain.xyz/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+
 
 - name: test
   plan:
@@ -114,19 +124,23 @@ jobs:
     on_failure:
       put: slack-alert
       params:
-        channel: '#general'
-        username: 'concourse'
-        icon_emoji: ':concourse:'
+        channel: '#concourse'
+        #username: 'rade'
+        #icon_emoji: ':concourse:'    # set in slack webhook settings
+        icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
         silent: true
         text: |
             *$BUILD_PIPELINE_NAME/$BUILD_JOB_NAME* ($BUILD_NAME) FAILED - Testing image failure
             https://ci.domain.xyz/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+
+
     on_success:
       put: slack-alert
       params:
-        channel: '#general'
-        username: 'concourse'
-        icon_emoji: ':concourse:'
+        channel: '#concourse'
+        #username: 'rade'
+        #icon_emoji: ':concourse:'    # set in slack webhook settings
+        icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
         silent: true
         text: |
             *$BUILD_PIPELINE_NAME/$BUILD_JOB_NAME* ($BUILD_NAME) SUCCESS - Testing image Succeeded
