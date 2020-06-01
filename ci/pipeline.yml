@@ -4,7 +4,8 @@ resources:
   icon: github-circle
   source:
     #uri: git@github.com:ruanbekker/docker-remote-tunnel.git
-    uri: https://github.com/ruanbekker/docker-remote-tunnel.git
+    #uri: https://github.com/ruanbekker/docker-remote-tunnel.git
+    uri: https://github.com/95rade/docker-remote-tunnel.git
     branch: master
     #private_key: ((github_private_key))
 
@@ -12,11 +13,9 @@ resources:
   type: docker-image
   icon: docker
   source:
-    repository: ruanbekker/docker-remote-tunnel
-    #repository: rade05/docker-remote-tunnel
+    #repository: ruanbekker/docker-remote-tunnel
+    repository: rade95/docker-remote-tunnel
     tag: test
-    #username: ((docker_hub_user2))
-    #password: ((docker_hub_password2))
     username: ((dockerhub-username))
     password: ((dockerhub-password))
 
